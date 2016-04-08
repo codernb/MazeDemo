@@ -1639,7 +1639,7 @@ MonoBehaviour:
   mazeGenerator: {fileID: 2074674948}
   spawnPrefab: {fileID: 181622, guid: 26fb22dc3c7ce44eb89a16eb1bf9fe4d, type: 2}
   prefabCount: 10
-  rearrangeObjects: 1
+  rearrangeObjects: 0
   rearrangeDelay: .100000001
 --- !u!114 &2074674950
 MonoBehaviour:
