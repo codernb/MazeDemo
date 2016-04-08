@@ -12,14 +12,14 @@ public class ObjectController : MonoBehaviour
 
     private GameObject[,] maze;
     private List<ObjectContainer> objects = new List<ObjectContainer>();
-    private List<Position> emptyTiles;
+    private List<Position> emptyPositions;
     private System.Random random = new System.Random();
 
     void Start()
     {
         maze = mazeGenerator.MakeBlocks();
-        emptyTiles = currentEmptyTiles;
-        var maxObjects = System.Math.Min(emptyTiles.Count, prefabCount);
+        emptyPositions = currentEmptyTiles;
+        var maxObjects = System.Math.Min(emptyPositions.Count, prefabCount);
         for (int i = 0; i < maxObjects; i++)
             spawnRandom(spawnPrefab);
         if (rearrangeObjects)
@@ -57,7 +57,7 @@ public class ObjectController : MonoBehaviour
     {
         var obj = (GameObject) Instantiate(prefab, new Vector3(position.x, 0, position.y), Quaternion.identity);
         maze[position.x, position.y] = obj;
-        emptyTiles.Remove(position);
+        emptyPositions.Remove(position);
         var objectContainer = new ObjectContainer(obj, position);
         objects.Add(objectContainer);
         return objectContainer;
@@ -76,8 +76,8 @@ public class ObjectController : MonoBehaviour
     public void moveObjectContainer(ObjectContainer objectContainer, Position newPosition)
     {
         moveObject(objectContainer.obj.transform, newPosition);
-        updateMaze(objectContainer.tile, newPosition, objectContainer.obj);
-        swapPositions(objectContainer.tile, newPosition);
+        updateMaze(objectContainer.position, newPosition, objectContainer.obj);
+        swapPositions(objectContainer.position, newPosition);
     }
     
     private ObjectContainer randomObjectContainer {
@@ -88,7 +88,7 @@ public class ObjectController : MonoBehaviour
 
     private Position randomFreePosition {
         get {
-            return emptyTiles[random.Next(0, emptyTiles.Count)];
+            return emptyPositions[random.Next(0, emptyPositions.Count)];
         }
     }
 
@@ -119,12 +119,12 @@ public class ObjectController : MonoBehaviour
     public class ObjectContainer
     {
         public GameObject obj;
-        public Position tile;
+        public Position position;
 
-        public ObjectContainer(GameObject obj, Position tile)
+        public ObjectContainer(GameObject obj, Position position)
         {
             this.obj = obj;
-            this.tile = tile;
+            this.position = position;
         }
     }
 

@@ -42,8 +42,7 @@ public class MazeGenerator : MonoBehaviour
                 if (Maze[i, j] == 1) {
                     MazeString = MazeString + "X";  // added to create String
                     ptype = GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    ptype.transform.position = new Vector3(i * ptype.transform.localScale.x, 0, j * ptype.transform.localScale.z);
-					
+                    ptype.transform.position = new Vector3(i, 0, j);
                     if (brick != null) {
                         ptype.GetComponent<Renderer>().material = brick;
                     }
@@ -119,9 +118,8 @@ public class MazeGenerator : MonoBehaviour
             //find the neighbor's position
             Vector2 neighborToCheck = new Vector2(Vector2ToCheck.x + offset.x, Vector2ToCheck.y + offset.y);
             //make sure it is inside the maze, and it hasn't been dug out yet
-            if (IsInside(neighborToCheck) && Maze[(int) neighborToCheck.x, (int) neighborToCheck.y] == 1) {
+            if (IsInside(neighborToCheck) && Maze[(int) neighborToCheck.x, (int) neighborToCheck.y] == 1)
                 intactWallCounter++;
-            }
         }
         //tell whether three walls are intact
         return intactWallCounter == 3;
@@ -129,7 +127,7 @@ public class MazeGenerator : MonoBehaviour
 	
     private bool IsInside(Vector2 p)
     {
-        //return p.x >= 0  p.y >= 0  p.x < width  p.y < height;
+//        return p.x >= 0  p.y >= 0  p.x < width  p.y < height;
         return p.x >= 0 && p.y >= 0 && p.x < width && p.y < height;
     }
 }
